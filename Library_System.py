@@ -75,7 +75,7 @@ lib = Library()
 lib.open_file()
 
 
-print(f"         ******Menu******\n         1) List Books\n         2) Add Book\n         3) Remove Book\n")
+print(f"         ******Menu******\n         1) List Books\n         2) Add Book\n         3) Remove Book\n         q) Quit\n")
 
 while True :
     try:
