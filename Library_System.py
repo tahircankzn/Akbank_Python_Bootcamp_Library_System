@@ -21,6 +21,12 @@ class Library():
 
         ##################################################
 
+    def __del__(self):
+        self.dosya.seek(0)
+        self.dosya.close()
+        print("Closed the file !\nSee you soon...")
+            
+
     def open_file(self):
         self.dosya = open("books.txt","a+")
         self.dosya.seek(0)
@@ -34,12 +40,12 @@ class Library():
 
     def print_books(self):
         self.dosya.seek(0)
+        print("\nKitaplar : ")
         for index,kitaplar in enumerate(self.dosya.read().splitlines()):
             kitap_bilgileri = list(kitaplar.split(","))
-            kitap = f"{index+1} -"
-            for i in kitap_bilgileri:
-                kitap+= f" | {i}"
+            kitap = f"           {index+1} - {kitap_bilgileri[0]} - {kitap_bilgileri[1]}"
             print(kitap)
+        print("\n")
 
     def add_book(self,mode = 1):
         if mode == 1:
@@ -56,7 +62,7 @@ class Library():
 
             self.içerik.update({kitap_adı : ek_bilgiler})
             self.dosya.write(kitap_adı + ek_bilgiler+"\n")
-
+            print("\n")
         elif mode == 0:
             for kitap in self.içerik.keys():
                 içerik = ""
@@ -64,6 +70,7 @@ class Library():
                     içerik += ","+i
                 
                 self.dosya.write(kitap + içerik +"\n")
+            print("\n")
 
     def delete_book(self):
         kitap = input("Kitap adı : ")
@@ -74,10 +81,8 @@ class Library():
 lib = Library()
 lib.open_file()
 
-
-print(f"         ******Menu******\n         1) List Books\n         2) Add Book\n         3) Remove Book\n         q) Quit\n")
-
 while True :
+    print(f"          ******Menu******\n          1) List Books\n          2) Add Book\n          3) Remove Book\n          Q) Quit\n")
     try:
         request = input("Request > ")
 
@@ -95,16 +100,16 @@ while True :
             lib.close_file()
             lib.open_file()
 
-        elif request == "q":
-            lib.close_file()
+        elif request == "q" or request == "Q":
             break
         else:
-            print("You have made an invalid transaction !")
+            print("\nYou have made an invalid transaction !\n")
 
     except KeyError:
-        print("You entered the wrong book name !")
+        print("\nYou entered the wrong book name !\n")
 
     except:
+        print("\nSomething gone wrong !\n")
         pass
 
 
